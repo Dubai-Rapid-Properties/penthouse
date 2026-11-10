@@ -48,6 +48,13 @@ export default function Hero() {
           {hero.subtitle}
         </p>
 
+        <p
+          className="rise mt-4 max-w-2xl font-serif text-lg italic leading-snug text-white sm:text-2xl"
+          style={{ animationDelay: '170ms' }}
+        >
+          {hero.tagline}
+        </p>
+
         <div
           className="rise mt-9 border-l-2 border-orange pl-5 sm:mt-10 sm:pl-6"
           style={{ animationDelay: '200ms' }}
@@ -63,7 +70,7 @@ export default function Hero() {
           style={{ animationDelay: '260ms' }}
         >
           <WhatsAppButton>{hero.primaryCta}</WhatsAppButton>
-          <a href="#scenario-resale" className="btn-ghost-light">
+          <a href="#options" className="btn-ghost-light">
             {hero.secondaryCta}
           </a>
         </div>

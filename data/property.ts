@@ -46,18 +46,19 @@ export const size = {
 } as const;
 
 export const hero = {
-  label: 'Investment Opportunity — DIFC',
+  label: 'Ready to Move In or Rent — DIFC',
   title: 'DIFC Duplex Penthouse',
-  subtitle: '2-Bedroom Duplex · 2,057 sqft · Park Towers, DIFC · Ready Investment',
+  subtitle: '2-Bedroom Duplex · 2,057 sqft · Park Towers, DIFC',
+  tagline: 'Move In, Rent Out, or Unlock Further Investment Potential — The Choice Is Yours.',
   price: 'AED 3,300,000',
-  priceNote: 'Target purchase price AED 3,200,000 · AED 1,585/sqft',
+  priceNote: 'AED 1,604/sqft · Target purchase price AED 3,200,000 (AED 1,556/sqft)',
   image: '/images/gallery/hero-living.jpg',
   imageAlt:
     'Main living area of the DIFC duplex penthouse at sunset, framed by floor-to-ceiling angled glazing overlooking the Dubai skyline',
   imageWidth: 1264,
   imageHeight: 843,
   primaryCta: 'Enquire on WhatsApp',
-  secondaryCta: 'View Full Numbers',
+  secondaryCta: 'Explore Your Options',
 } as const;
 
 export const quickFacts = [
@@ -65,7 +66,7 @@ export const quickFacts = [
   { value: 'Duplex', label: 'Penthouse' },
   { value: size.sqftLabel, label: size.sqmLabel },
   { value: 'Park Towers', label: 'DIFC' },
-  { value: 'AED 1,585', label: 'Per sqft' },
+  { value: 'AED 1,604', label: 'Per sqft' },
   { value: 'Ready', label: 'To move / rent' },
 ] as const;
 
@@ -73,9 +74,9 @@ export const opportunity = {
   label: 'The Opportunity',
   heading: 'Priced well below the district it sits in',
   paragraphs: [
-    'A two-bedroom duplex penthouse inside Park Towers, in the heart of the Dubai International Financial Centre, available at AED 1,585 per square foot — in a district where comparable towers trade above AED 2,500 per square foot.',
-    'That gap is the whole case. It leaves room for two clear routes: renovate the unit and resell into the district’s prevailing rate, or hold it as a ready rental asset and let a fully let DIFC address do the work.',
-    'Supply in this specific category — duplex penthouse floor plates inside DIFC — is limited, and it is not being replenished, while demand for the district keeps growing as DIFC expands. The unit is ready to move into or rent today; the two studies below set out each route in full.',
+    'A two-bedroom duplex penthouse inside Park Towers, in the heart of the Dubai International Financial Centre, available at AED 1,604 per square foot — in a district where comparable towers trade above AED 2,500 per square foot.',
+    'It is ready today. Buy it and move straight in, or let it as it stands and start earning rental income — no renovation is required for either. For investors who want more, an optional renovation can lift both the rent and the resale value, and our team can plan and manage it with you.',
+    'Supply in this specific category — duplex penthouse floor plates inside DIFC — is limited and is not being replenished, while demand for the district keeps growing as DIFC expands. Whether you are buying a home or an investment, the four options below set out each route.',
   ],
   image: '/images/gallery/glazing-portrait.jpg',
   imageAlt:
@@ -186,22 +187,303 @@ export const gallery: GalleryImage[] = [
   },
 ];
 
-export const scenarioA = {
-  label: 'Feasibility Study — Resale',
+/* -------------------------------------------------------------------------- */
+/*  Pricing & the four options                                                */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Price per square foot, checked against the unit size above:
+ *   asking  AED 3,300,000 / 2,057 sqft = AED 1,604.28 -> AED 1,604/sqft
+ *   target  AED 3,200,000 / 2,057 sqft = AED 1,555.66 -> AED 1,556/sqft
+ * (The earlier AED 1,585 figure was the target price over the old 2,018 sqft.)
+ */
+export const pricing = {
+  asking: 'AED 3,300,000',
+  target: 'AED 3,200,000',
+  askingPerSqft: 'AED 1,604/sqft',
+  targetPerSqft: 'AED 1,556/sqft',
+} as const;
+
+/**
+ * One row of a feasibility ledger.
+ *  - item:     an ordinary line (deductions carry a leading "−" in the value)
+ *  - subtotal: closes a group (e.g. "Total purchase cost")
+ *  - total:    a headline total (e.g. "Total investment")
+ */
+export type LedgerRow = {
+  label: string;
+  value: string;
+  note?: string;
+  kind?: 'item' | 'subtotal' | 'total';
+};
+
+export type LedgerGroup = {
+  heading?: string;
+  rows: readonly LedgerRow[];
+};
+
+/** Shared by every option: what it costs to buy the unit. */
+const purchaseCosts: LedgerGroup = {
+  heading: 'Purchase costs',
+  rows: [
+    { label: 'Target purchase price', value: 'AED 3,200,000', note: 'Asking AED 3,300,000' },
+    { label: 'DIFC registration fee (5%)', value: 'AED 160,000' },
+    { label: 'Agency fee (2%)', value: 'AED 64,000' },
+    { label: 'Total purchase cost', value: 'AED 3,424,000', kind: 'subtotal' },
+  ],
+};
+
+/** Planning assumptions used throughout the studies -- edit here, then re-check the sums. */
+export const assumptions = {
+  label: 'Basis of the Figures',
+  heading: 'How these numbers are calculated',
+  intro:
+    'Every option is calculated on the same basis, so the four can be compared like for like. The assumptions below are estimates and should be confirmed for the specific unit before purchase.',
+  items: [
+    'Cash purchase at the target price of AED 3,200,000. Mortgage and finance costs are not included.',
+    'Acquisition costs: DIFC registration fee of 5% and agency fee of 2% of the purchase price.',
+    'Service charges estimated at approximately AED 25 per sqft per year (about AED 51,500 for 2,057 sqft). The unit’s actual service-charge statement should be confirmed.',
+    'Long-term lettings: property management at 5% of rent. Short-term lettings: holiday-home management at 20% of revenue, plus an estimated AED 24,000 a year for utilities, licensing and upkeep.',
+    'Holding costs while the unit is vacant (service charges and utilities): about AED 5,000 a month — AED 45,000 over ~9 months for Option 03 and AED 30,000 over ~6 months for Option 04.',
+    'Resale costs: 2% agency fee on the sale price plus an estimated AED 5,000 for NOC and transfer administration.',
+    'Resale values are based on current DIFC comparables. No capital appreciation is added to the resale scenarios.',
+    'Yields and ROI are calculated on total cash invested, before personal tax, and are not annualised unless stated.',
+  ],
+  projectedNote:
+    'Projected, not guaranteed: every rental income, resale value, profit and return on this page is a projection based on current market data and the assumptions above. None of these returns is guaranteed, and actual results may be higher or lower.',
+} as const;
+
+export type OptionCard = {
+  id: string;
+  number: string;
+  icon: 'home' | 'key' | 'trend' | 'layers';
+  title: string;
+  tag: string;
+  summary: string;
+  points: string[];
+  renovation: 'none' | 'optional';
+  figure: { label: string; value: string };
+};
+
+export const options = {
+  label: 'Your Options',
+  heading: 'One Property. Four Possibilities.',
+  intro:
+    'Choose the approach that matches your lifestyle or investment goals. The penthouse is ready today — renovation is an option to increase returns, never a requirement.',
+  tagline: 'Move In, Rent Out, or Unlock Further Investment Potential — The Choice Is Yours.',
+  footnote: 'Projected figures, not guaranteed. Full breakdown under each option.',
+  cards: [
+    {
+      id: 'option-move-in',
+      number: '01',
+      icon: 'home',
+      title: 'Buy & Move In',
+      tag: 'Personal Use',
+      summary: 'Your DIFC residence, ready to enjoy. No renovation required.',
+      points: [
+        'Purchase and enjoy the property in its current condition',
+        'No renovation required',
+        'Ideal for end-users looking for a residence in DIFC',
+      ],
+      renovation: 'none',
+      figure: { label: 'Total purchase cost', value: 'AED 3,424,000' },
+    },
+    {
+      id: 'option-rent',
+      number: '02',
+      icon: 'key',
+      title: 'Buy & Rent',
+      tag: 'Rental Income',
+      summary: 'Start generating rental income without renovating.',
+      points: [
+        'Purchase and rent out the property as-is',
+        'No renovation required',
+        'Gross and net rental income, with ROI',
+      ],
+      renovation: 'none',
+      figure: { label: 'Projected gross rent per year', value: 'AED 200,000 – 280,000' },
+    },
+    {
+      id: 'option-resale',
+      number: '03',
+      icon: 'trend',
+      title: 'Renovate & Resell',
+      tag: 'Capital Gain',
+      summary: 'Explore potential capital gains through renovation.',
+      points: [
+        'Purchase, renovate and resell for potential profit',
+        'Optional strategy — our team can plan and manage the works',
+        'Renovation costs, total investment, resale value, net profit and ROI',
+      ],
+      renovation: 'optional',
+      figure: { label: 'Projected net profit', value: 'AED 826,000 – 1,022,000' },
+    },
+    {
+      id: 'option-combined',
+      number: '04',
+      icon: 'layers',
+      title: 'Renovate, Rent & Resell',
+      tag: 'Combined Returns',
+      summary: 'Combine rental income with a future resale strategy.',
+      points: [
+        'Purchase and renovate, generate rental income, then resell',
+        'Optional strategy — rent and resale gain stack together',
+        'Rental income, resale value, total costs and combined ROI',
+      ],
+      renovation: 'optional',
+      figure: { label: 'Projected combined net profit', value: 'AED 1,074,500 – 1,270,500' },
+    },
+  ] satisfies OptionCard[],
+} as const;
+
+/** Lead-in to the four feasibility studies. */
+export const studies = {
+  label: 'Feasibility Studies',
+  heading: 'The numbers behind each option',
+  intro:
+    'For investors who want the detail: each option is broken down into purchase costs, renovation (where applicable), rental returns and resale — gross and net.',
+} as const;
+
+/* Option 01 — Buy & Move In ------------------------------------------------ */
+
+export const optionMoveIn = {
+  id: 'option-move-in',
+  label: 'Option 01 — Personal Use',
+  heading: 'Buy & Move In',
+  intro:
+    'Purchase the penthouse and live in it exactly as it is today. It is ready for occupation — no renovation, no waiting. Your costs are the purchase itself, the registration and agency fees, and the building’s annual service charges.',
+  ledger: [
+    purchaseCosts,
+    {
+      heading: 'Ongoing ownership costs',
+      rows: [{ label: 'Service charges (est. ~AED 25/sqft)', value: 'AED 51,500 / yr' }],
+    },
+  ] satisfies LedgerGroup[],
+  highlights: {
+    heading: 'Why live here',
+    items: [
+      'Two bedrooms across a duplex layout — 2,057 sqft',
+      'Floor-to-ceiling glazing over the Dubai skyline',
+      '3 minutes to DIFC Gate Village, 4 minutes to Emirates Towers Metro',
+      'Ready to move in — no works required',
+    ],
+  },
+  optionalNote: {
+    heading: 'Renovation is optional',
+    body: 'If you would like to personalise finishes or furnishings at any point, our team can plan and manage the work with you. It is a choice, not a requirement.',
+  },
+} as const;
+
+/* Option 02 — Buy & Rent --------------------------------------------------- */
+
+export const optionRent = {
+  id: 'option-rent',
+  label: 'Option 02 — Rental Income',
+  heading: 'Buy & Rent',
+  intro:
+    'Let the penthouse in its current condition and start earning straight away. Three rental positions, from a single-cheque long lease to a managed short-term let — shown both gross and net of running costs.',
+  purchase: purchaseCosts,
+  rentalsHeading: 'Projected gross rental income — as-is',
+  rentals: [
+    { type: 'Long-term rent', amount: 'AED 200,000', terms: '1 cheque · per year', highlight: false },
+    { type: 'Long-term rent', amount: 'AED 210,000', terms: '2 cheques · per year', highlight: false },
+    { type: 'Short-term rent', amount: 'AED 280,000', terms: '75% occupancy · per year', highlight: true },
+  ],
+  netHeading: 'From gross to net rental income',
+  net: [
+    {
+      heading: 'Long-term let — 1 cheque',
+      rows: [
+        { label: 'Gross rental income', value: 'AED 200,000' },
+        { label: 'Service charges (est.)', value: '− AED 51,500' },
+        { label: 'Property management (5%)', value: '− AED 10,000' },
+        { label: 'Net rental income', value: 'AED 138,500', kind: 'subtotal' },
+      ],
+      yields: [
+        { label: 'Gross yield', value: '5.8%' },
+        { label: 'Net yield', value: '4.0%' },
+      ],
+    },
+    {
+      heading: 'Short-term let — 75% occupancy',
+      rows: [
+        { label: 'Gross rental income', value: 'AED 280,000' },
+        { label: 'Service charges (est.)', value: '− AED 51,500' },
+        { label: 'Holiday-home management (20%)', value: '− AED 56,000' },
+        { label: 'Utilities, licensing & upkeep (est.)', value: '− AED 24,000' },
+        { label: 'Net rental income', value: 'AED 148,500', kind: 'subtotal' },
+      ],
+      yields: [
+        { label: 'Gross yield', value: '8.2%' },
+        { label: 'Net yield', value: '4.3%' },
+      ],
+    },
+  ],
+  yieldBasis:
+    'Yields are per year, on the total purchase cost of AED 3,424,000. Projected, not guaranteed.',
+  appreciation: {
+    heading: 'Capital Appreciation',
+    value: '3-year assumption — 5% annually',
+    note: 'An assumption only — not included in the yields above and not guaranteed.',
+  },
+  rationale: {
+    heading: 'Why This Category',
+    body: 'DIFC is rapidly expanding, while availability of units in this specific category remains limited due to strong demand and restricted supply.',
+  },
+  importantNote: {
+    heading: 'No renovation needed',
+    body: 'These projections are for the unit as it stands today. Renovation is optional — if upgrades are carried out, projected long-term rent rises to AED 290,000 – 310,000 a year (see Option 04).',
+  },
+} as const;
+
+/* Option 03 — Renovate & Resell -------------------------------------------- */
+
+export const optionResale = {
+  id: 'option-resale',
+  label: 'Option 03 — Capital Gain',
   heading: 'Renovate & Resell',
   intro:
-    'Acquire at the target price, carry out a full renovation and furnishing programme, then exit into the district’s prevailing rate.',
-  rows: [
-    { label: 'Unit size', value: size.full },
-    { label: 'Asking price', value: 'AED 3,300,000' },
-    { label: 'Target purchase price', value: 'AED 3,200,000' },
-    { label: 'DIFC registration (5%)', value: 'AED 160,000' },
-    { label: 'Agency fee (2%)', value: 'AED 64,000' },
-    { label: 'Renovation & furnishing', value: 'AED 600,000' },
+    'An optional value-add strategy: acquire at the target price, carry out a full renovation and furnishing programme, then resell into the district’s prevailing rate. Our team can plan and manage the works for you.',
+  ledger: [
+    purchaseCosts,
+    {
+      heading: 'Renovation & holding costs',
+      rows: [
+        { label: 'Renovation & furnishing', value: 'AED 600,000' },
+        {
+          label: 'Holding costs (est.)',
+          value: 'AED 45,000',
+          note: 'Service charges & utilities, ~9 months',
+        },
+        { label: 'Total renovation & holding', value: 'AED 645,000', kind: 'subtotal' },
+      ],
+    },
+    { rows: [{ label: 'Total investment', value: 'AED 4,069,000', kind: 'total' }] },
+    {
+      heading: 'Resale',
+      rows: [
+        { label: 'Projected resale value', value: 'AED 5,000,000 – 5,200,000' },
+        {
+          label: 'Resale costs (est.)',
+          value: '− AED 105,000 – 109,000',
+          note: '2% agency fee + NOC & transfer admin',
+        },
+        { label: 'Net sale proceeds', value: 'AED 4,895,000 – 5,091,000', kind: 'subtotal' },
+      ],
+    },
+  ] satisfies LedgerGroup[],
+  results: [
+    {
+      label: 'Projected net profit',
+      value: 'AED 826,000 – 1,022,000',
+      note: 'Net sale proceeds less total investment',
+    },
+    {
+      label: 'Projected ROI',
+      value: '20.3% – 25.1%',
+      note: 'On AED 4,069,000 invested, over ~9–12 months',
+    },
   ],
-  total: { label: 'Total investment', value: 'AED 4,024,000' },
-  resale: { label: 'Projected resale value', value: 'AED 5,000,000 – 5,200,000' },
-  profit: { label: 'Projected Profit', value: 'AED 976,000 – 1,176,000' },
   renovation: {
     heading: 'Renovation & Exit Strategy',
     budget: 'AED 600,000',
@@ -220,75 +502,90 @@ export const scenarioA = {
       name: 'This unit — Park Towers',
       sizeLabel: size.sqftLabel,
       price: 'AED 3,300,000',
-      rate: 'AED 1,585/sqft',
+      rate: 'AED 1,604/sqft',
     },
     items: [
       { name: 'Central Park Towers', price: 'AED 5.20M', rate: 'AED 2,550/sqft' },
       { name: 'Index Tower', price: 'AED 5.25M', rate: 'AED 2,516/sqft' },
     ],
-    note: 'Comparable DIFC towers trade above AED 2,500 per square foot. At 2,057 sqft, this unit is offered at AED 5 per square foot — the gap is the opportunity.',
+    note: 'Comparable DIFC towers trade above AED 2,500 per square foot. At 2,057 sqft, this unit is offered at AED 1,604 per square foot at the asking price (AED 1,556 at the target price) — the gap is the opportunity.',
     footnote: 'Market data extracted from DXB Interact.',
   },
 } as const;
 
-export const scenarioCombined = {
-  label: 'Feasibility Study — Renovate, Rent & Resell',
+/* Option 04 — Renovate, Rent & Resell -------------------------------------- */
+
+export const optionCombined = {
+  id: 'option-combined',
+  label: 'Option 04 — Combined Returns',
   heading: 'Renovate, Rent & Resell',
   intro:
-    'The same renovation as above — but the unit is let for a year before it is sold. The rent is additive: it stacks on top of the resale profit rather than replacing it, which lifts the return well beyond a straight resale.',
-  figures: [
-    { label: 'Rent after renovation', value: 'AED 300,000', note: 'Per year' },
-    { label: 'Long-term ROI', value: '7.45', note: 'On rent alone' },
-  ],
-  combined: {
-    profit: {
-      label: 'Combined profit',
-      value: 'AED 1,276,000 – 1,476,000',
-      note: 'Renovation resale + 1 year rent',
+    'The same optional renovation as Option 03, but the unit is let for a year before it is sold. Net rental income is added on top of the resale gain rather than replacing it.',
+  ledger: [
+    purchaseCosts,
+    {
+      heading: 'Renovation & holding costs',
+      rows: [
+        { label: 'Renovation & furnishing', value: 'AED 600,000' },
+        {
+          label: 'Holding costs (est.)',
+          value: 'AED 30,000',
+          note: 'Service charges & utilities, ~6 months of works',
+        },
+        { label: 'Total renovation & holding', value: 'AED 630,000', kind: 'subtotal' },
+      ],
     },
-    roi: {
-      label: 'Combined ROI',
-      value: '31% – 36%',
-      note: 'Renovation resale + 1 year rent',
+    { rows: [{ label: 'Total investment', value: 'AED 4,054,000', kind: 'total' }] },
+    {
+      heading: 'Rental year — after renovation',
+      rows: [
+        {
+          label: 'Gross rental income',
+          value: 'AED 300,000',
+          note: '12 months, mid-point of AED 290,000 – 310,000',
+        },
+        { label: 'Service charges (est.)', value: '− AED 51,500' },
+        { label: 'Property management (5%)', value: '− AED 15,000' },
+        { label: 'Net rental income', value: 'AED 233,500', kind: 'subtotal' },
+      ],
     },
-  },
-  comparison: 'Against AED 976,000 – 1,176,000 on a straight resale, without renting.',
-} as const;
-
-export const scenarioB = {
-  label: 'Feasibility Study — Rental ROI',
-  heading: 'Rental Income',
-  intro:
-    'Held as-is, the 2,057 sqft duplex is ready to let today. Three positions, from a single-cheque long lease to a managed short-term operation.',
-  rentals: [
-    { type: 'Long-term rent', amount: 'AED 200,000', terms: '1 cheque', highlight: false },
-    { type: 'Long-term rent', amount: 'AED 210,000', terms: '2 cheques', highlight: false },
-    { type: 'Short-term rent', amount: 'AED 280,000', terms: '75% occupancy', highlight: true },
+    {
+      heading: 'Resale — at the end of the lease',
+      rows: [
+        { label: 'Projected resale value', value: 'AED 5,000,000 – 5,200,000' },
+        {
+          label: 'Resale costs (est.)',
+          value: '− AED 105,000 – 109,000',
+          note: '2% agency fee + NOC & transfer admin',
+        },
+        { label: 'Net sale proceeds', value: 'AED 4,895,000 – 5,091,000' },
+        {
+          label: 'Gain on resale',
+          value: 'AED 841,000 – 1,037,000',
+          note: 'Net sale proceeds less total investment',
+          kind: 'subtotal',
+        },
+      ],
+    },
+  ] satisfies LedgerGroup[],
+  yields: [
+    { label: 'Gross rental yield', value: '7.4%', note: 'Per year, on total investment' },
+    { label: 'Net rental yield', value: '5.8%', note: 'Per year, on total investment' },
   ],
-  acquisitionCosts: {
-    heading: 'Acquisition Costs',
-    items: [
-      { label: 'DIFC registration (5%)', value: 'AED 160,000' },
-      { label: 'Agency fee (2%)', value: 'AED 64,000' },
-    ],
-  },
-  roi: [
-    { label: 'Long-term ROI', value: '5%' },
-    { label: 'Short-term ROI', value: '7%' },
+  results: [
+    {
+      label: 'Projected combined net profit',
+      value: 'AED 1,074,500 – 1,270,500',
+      note: 'Gain on resale + 1 year net rent',
+    },
+    {
+      label: 'Projected combined ROI',
+      value: '26.5% – 31.3%',
+      note: 'On AED 4,054,000 invested, over ~18 months',
+    },
   ],
-  appreciation: {
-    heading: 'Capital Appreciation',
-    value: '3-year assumption — 5% annually',
-    note: 'Capital appreciation is an assumption and is not guaranteed.',
-  },
-  rationale: {
-    heading: 'Why This Category',
-    body: 'DIFC is rapidly expanding, while availability of units in this specific category remains limited due to strong demand and restricted supply.',
-  },
-  importantNote: {
-    heading: 'Important note',
-    body: 'Projected rental income is based on a NON-renovated unit. If upgrades are carried out, projected rent increases to AED 290,000 – 310,000.',
-  },
+  comparison:
+    'Against AED 826,000 – 1,022,000 projected on a straight renovate-and-resell (Option 03).',
 } as const;
 
 export const location = {
@@ -318,7 +615,7 @@ export const location = {
 export const finalCta = {
   label: 'Next Step',
   heading: 'Get in Touch with a Specialist',
-  body: 'Full floor plans, the complete feasibility study and a viewing can be arranged directly. Message on WhatsApp for the fastest reply.',
+  body: 'Whether you plan to live here, let it or invest further, full floor plans, the complete feasibility studies and a viewing can be arranged directly. Message on WhatsApp for the fastest reply.',
   backgroundImage: '/images/gallery/reception-lounge.jpg',
   backgroundWidth: 1264,
   backgroundHeight: 843,
@@ -328,13 +625,13 @@ export const finalCta = {
 export const footer = {
   copyright: `© ${new Date().getFullYear()} Dubai Rapid Properties. All rights reserved.`,
   disclaimer:
-    'All figures, projections and returns stated on this page are estimates based on current market data and are provided for information purposes only. They do not constitute financial advice or a guarantee of future performance. Terms and availability are subject to change.',
+    'All figures, projections and returns stated on this page are estimates based on current market data and the stated assumptions, and are provided for information purposes only. Projected rental income, resale values and returns are not guaranteed. They do not constitute financial advice or a guarantee of future performance. Renovation is optional and is not required to purchase, occupy or let the property. Terms and availability are subject to change.',
 } as const;
 
 export const seo = {
   title: 'DIFC Duplex Penthouse — Park Towers | Dubai Rapid Properties',
   description:
-    '2-bedroom duplex penthouse, 2,057 sqft, in Park Towers, DIFC at AED 3,300,000 — AED 1,585/sqft in a district trading above AED 2,500/sqft. Full feasibility studies inside.',
+    '2-bedroom duplex penthouse, 2,057 sqft, in Park Towers, DIFC at AED 3,300,000 — AED 1,604/sqft in a district trading above AED 2,500/sqft. Ready to move in or rent, with optional renovation strategies and full feasibility studies.',
   siteName: 'Dubai Rapid Properties',
   ogImage: '/images/og-image.jpg',
   ogImageWidth: 1200,
