@@ -47,6 +47,14 @@ formatted. This is deliberate: the figures come from a feasibility study and mus
 written, so nothing can be re-rounded by a formatter. Raw numbers appear only in the `seo` object,
 where the JSON-LD schema needs them.
 
+### Feasibility figures
+
+The four studies share one set of planning assumptions (service charges, management fees, holding
+and resale costs), listed in the `assumptions` object and shown on the page. Every ledger is
+written out as display strings, so **if you change any input, recalculate the dependent subtotals,
+profits, yields and ROI by hand** — nothing is derived automatically. Each option's net profit
+accounts for acquisition fees, renovation, holding costs, management fees and resale costs.
+
 To change the WhatsApp number or the pre-filled message, edit `WHATSAPP_NUMBER` and
 `WHATSAPP_MESSAGE` at the top of that file — the URL is encoded automatically and every CTA on the
 page picks it up.
@@ -114,14 +122,19 @@ components/
   Hero.tsx          full-viewport, CSS entrance (never JS-gated)
   QuickFacts.tsx    charcoal band, five stats
   Opportunity.tsx   editorial intro + portrait
+  Possibilities.tsx "One Property. Four Possibilities." -- four option cards
   Gallery.tsx       CSS-columns masonry -> Lightbox
-  ScenarioResale.tsx    Scenario A: renovate & resell
-  ScenarioRental.tsx    Scenario B: rental income & ROI
+  StudiesIntro.tsx  charcoal band + jump menu into the feasibility studies
+  OptionMoveIn.tsx  Option 01: buy & move in (no renovation)
+  OptionRent.tsx    Option 02: buy & rent as-is, gross -> net yields
+  OptionResale.tsx  Option 03: renovate & resell (optional) + comparables
+  OptionCombined.tsx Option 04: renovate, rent & resell (optional)
+  Assumptions.tsx   basis of every figure; projected, not guaranteed
   Location.tsx      branded DRP map + Google embed + drive times
   FinalCta.tsx      agent, WhatsApp, contact details
   MobileCtaBar.tsx  fixed WhatsApp + Call bar under 768px
   Footer.tsx        logo, copyright, disclaimer
-  ui/               Reveal, SectionHeading, Lightbox, ScrollableMap, buttons
+  ui/               Reveal, SectionHeading, Ledger, ProjectedBadge, Lightbox, ScrollableMap, buttons
 data/property.ts    all copy, numbers and contact details
 lib/site.ts         absolute URL helper for canonical + OG tags
 ```
