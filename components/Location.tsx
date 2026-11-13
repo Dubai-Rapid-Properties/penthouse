@@ -39,15 +39,32 @@ export default function Location() {
         <div className="mt-5 grid gap-5 lg:grid-cols-12">
           {/* Interactive map */}
           <Reveal className="lg:col-span-7">
-            <div className="h-full border border-charcoal/10 bg-white">
+            <div className="flex h-full flex-col border border-charcoal/10 bg-white">
               <iframe
                 src={location.embedSrc}
                 title={location.embedTitle}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
-                className="block h-[320px] w-full border-0 sm:h-[420px] lg:h-full lg:min-h-[440px]"
+                className="block h-[320px] w-full flex-1 border-0 sm:h-[420px] lg:h-auto lg:min-h-[440px]"
               />
+              <a
+                href={location.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between gap-4 border-t border-charcoal/10 px-5 py-3.5 text-[12px] font-medium uppercase tracking-[0.14em] text-charcoal transition-colors hover:bg-sand/50 sm:px-7"
+              >
+                <span className="flex items-center gap-2.5">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 text-orange" fill="none" stroke="currentColor" strokeWidth="1.6">
+                    <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" strokeLinejoin="round" />
+                    <circle cx="12" cy="9.5" r="2.5" />
+                  </svg>
+                  {location.mapsLinkLabel}
+                </span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
             </div>
           </Reveal>
 
