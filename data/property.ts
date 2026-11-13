@@ -598,8 +598,12 @@ export const location = {
     'Illustrated map of the Dubai coastline from Palm Jumeirah to Deira, with Park Towers marked in orange within DIFC, beside Sheikh Zayed Road',
   mapImageWidth: 2200,
   mapImageHeight: 947,
-  embedSrc: 'https://www.google.com/maps?q=Park%20Towers%2C%20DIFC%2C%20Dubai&output=embed',
-  embedTitle: 'Google Map showing Park Towers, DIFC, Dubai',
+  // Pinned to the exact coordinates of DAMAC Park Towers (from the shared
+  // Google Maps link), not a text search, so the pin always lands on the tower.
+  embedSrc: 'https://www.google.com/maps?q=25.2090816,55.2784806&z=17&output=embed',
+  embedTitle: 'Google Map pinpointing DAMAC Park Towers, DIFC, Dubai',
+  mapsUrl: 'https://maps.app.goo.gl/BajKcWoWrC5SnMKu9',
+  mapsLinkLabel: 'Open in Google Maps',
   driveTimesNote: 'Approximate driving times in normal traffic.',
   landmarks: [
     { name: 'DIFC Gate Village', time: '3 min' },
